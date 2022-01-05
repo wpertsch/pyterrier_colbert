@@ -25,6 +25,7 @@ def load_checkpoint(path, model, optimizer=None, do_print=True):
             name = k[7:]
         new_state_dict[name] = v
 
+    new_state_dict.pop("bert.embeddings.position_ids")
     checkpoint['model_state_dict'] = new_state_dict
 
     model.load_state_dict(checkpoint['model_state_dict'])

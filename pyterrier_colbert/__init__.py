@@ -1,4 +1,3 @@
-
 #import importlib
 #ranking = importlib.import_module('.' + 'indexing', package='pyterrier_colbert') 
 #ranking = importlib.import_module('.' + 'ranking', package='pyterrier_colbert')
@@ -21,8 +20,11 @@ def load_checkpoint(path, model, optimizer=None, do_print=True):
     new_state_dict = OrderedDict()
     for k, v in state_dict.items():
         name = k
-        if k[:7] == 'module.':
-            name = k[7:]
+        if k[:6] == 'model.':
+            name = k[6:]
+            k = name
+        if k[:7] == 'roberta':
+            name = 'bert'+ k[7:]
         new_state_dict[name] = v
 
     new_state_dict.pop("bert.embeddings.position_ids")
